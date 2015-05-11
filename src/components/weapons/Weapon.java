@@ -1,4 +1,4 @@
-package components;
+package components.weapons;
 
 public abstract class Weapon {
   protected int points = 0;

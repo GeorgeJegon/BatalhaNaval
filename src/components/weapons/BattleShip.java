@@ -1,4 +1,4 @@
-package components;
+package components.weapons;
 
 public class BattleShip extends Weapon {
   public BattleShip () {

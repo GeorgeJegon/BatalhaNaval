@@ -1,4 +1,4 @@
-package components;
+package components.weapons;
 
 public class TorpedoBoat extends Weapon {
   public TorpedoBoat(){

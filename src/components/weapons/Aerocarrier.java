@@ -1,4 +1,4 @@
-package components;
+package components.weapons;
 
 public class Aerocarrier extends Weapon {
   public Aerocarrier () {
