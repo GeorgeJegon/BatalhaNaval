@@ -6,17 +6,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Client {
-  private Socket client;
-
+  private Socket requestSocket;
+  
   public Client() {
-    initClient();
+    new Client("127.0.0.1");
   }
 
-  private void initClient() {
+  public Client(String ip) {
     try {
-      client = new Socket("127.0.0.1", 3322);
+      requestSocket = new Socket(ip, 3322);
       Scanner keyboard = new Scanner(System.in);
-      PrintStream output = new PrintStream(client.getOutputStream());
+      PrintStream output = new PrintStream(requestSocket.getOutputStream());
 
       while (keyboard.hasNextLine()) {
         output.println(keyboard.nextLine());
@@ -29,5 +29,4 @@ public class Client {
           exception);
     }
   }
-
 }
