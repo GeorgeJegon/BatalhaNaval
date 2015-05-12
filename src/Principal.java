@@ -1,5 +1,8 @@
 import components.weapons.*;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.Random;
 
 public class Principal {
@@ -9,11 +12,15 @@ public class Principal {
    * @throws ClassNotFoundException
    * @throws IllegalAccessException
    * @throws InstantiationException
+ * @throws IOException 
    */
   public static void main(String[] args) throws ClassNotFoundException,
-      InstantiationException, IllegalAccessException {
+      InstantiationException, IllegalAccessException, IOException {
     // TODO Auto-generated method stub
-    Weapon[][] grid = new Weapon[100][100];
+	Properties prop = getProp();
+	int gridSize = Integer.parseInt(prop.getProperty("gridSize"));
+
+    Weapon[][] grid = new Weapon[gridSize][gridSize];
     ArrayList<Weapon> listWeapons = new ArrayList<Weapon>();
 
     populateWeapons(listWeapons, Aerocarrier.class, 5);
@@ -21,9 +28,17 @@ public class Principal {
     populateWeapons(listWeapons, TorpedoBoat.class, 10);
     populateWeapons(listWeapons, BattleShip.class, 3);
 
-    //addWeaponToGrid(grid, listWeapons);
+    addWeaponToGrid(grid, listWeapons);
+  }
+  
+  public static Properties getProp() throws IOException {
+	  Properties prop = new Properties();
+	  FileInputStream file = new FileInputStream("./src/config.properties");
+	  prop.load(file);
+	  return prop;
   }
 
+ 
   public static void addWeaponToGrid(Weapon[][] grid,
       ArrayList<Weapon> listWeapon) {
     Random r = new Random();
