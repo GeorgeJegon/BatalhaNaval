@@ -22,7 +22,7 @@ public class Principal {
       InstantiationException, IllegalAccessException, IOException {
     // TODO Auto-generated method stub
     prop = getProp();
-    int gridSize = Integer.parseInt(prop.getProperty("gridSize"));
+    int gridSize = Integer.parseInt(prop.getProperty("grid_size"));
 
     Weapon[][] grid = new Weapon[gridSize][gridSize];
 
@@ -49,19 +49,18 @@ public class Principal {
       ArrayList<Weapon> listWeapon) {
     Random r = new Random();
     int[] position = new int[2];
+    int gridSize = Integer.parseInt(prop.getProperty("grid_size"));
     int cells;
     Orientation orientation;
 
     for (Weapon weapon : listWeapon) {
       cells = weapon.getCellsOccupation();
       do {
-        position[0] = r.nextInt(100);
-        position[1] = r.nextInt(100);
+        position[0] = r.nextInt(gridSize);
+        position[1] = r.nextInt(gridSize);
         orientation = listOrientations.get(r.nextInt(4));
       } while(!orientation.checkEmptyCells(grid, cells, position));
       orientation.fillCells(grid, weapon, position);
-      System.out.println("\nEstou nas posições:\n");
-      weapon.listPosition();
     }
   }
   
