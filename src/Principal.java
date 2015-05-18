@@ -1,3 +1,4 @@
+import components.grid.Grid;
 import components.orientations.*;
 import components.weapons.*;
 import java.io.FileInputStream;
@@ -21,21 +22,7 @@ public class Principal {
   public static void main(String[] args) throws ClassNotFoundException,
       InstantiationException, IllegalAccessException, IOException {
     // TODO Auto-generated method stub
-    prop = getProp();
-    int gridSize = Integer.parseInt(prop.getProperty("grid_size"));
-
-    Weapon[][] grid = new Weapon[gridSize][gridSize];
-
-    ArrayList<Weapon> listWeapons = new ArrayList<Weapon>();
-    populateWeapons(listWeapons, Aerocarrier.class, 5);
-    populateWeapons(listWeapons, Submarine.class, 3);
-    populateWeapons(listWeapons, TorpedoBoat.class, 10);
-    populateWeapons(listWeapons, BattleShip.class, 3);
-
-    listOrientations.addAll(Arrays.asList(new Right(), new Up(), new Left(),
-        new Bottom()));
-
-    addWeaponToGrid(grid, listWeapons);
+    new Grid();
   }
 
   public static Properties getProp() throws IOException {
