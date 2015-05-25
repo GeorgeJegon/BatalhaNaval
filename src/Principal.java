@@ -1,12 +1,16 @@
 import components.grid.Grid;
+import components.grid.GridServer;
 import components.orientations.*;
+import components.player.Player;
+import components.shot.Shot;
 import components.weapons.*;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Properties;
-import java.util.Random;
+
+import javax.swing.JOptionPane;
 
 public class Principal {
   static Properties prop;
@@ -20,9 +24,36 @@ public class Principal {
    * @throws IOException
    */
   public static void main(String[] args) throws ClassNotFoundException,
-      InstantiationException, IllegalAccessException, IOException {
-    // TODO Auto-generated method stub
-    new Grid();
+	  InstantiationException, IllegalAccessException, IOException {
+	// TODO Auto-generated method stub
+	
+	ArrayList<Weapon> listWeapons = new ArrayList<Weapon>();
+	ArrayList<Player> listPlayers = new ArrayList<Player>();
+	Grid gameGrid = new GridServer();
+	
+    populateWeapons(listWeapons, Aerocarrier.class, 5);
+    populateWeapons(listWeapons, Submarine.class, 3);
+    populateWeapons(listWeapons, TorpedoBoat.class, 8);
+    populateWeapons(listWeapons, BattleShip.class, 3);
+    
+    gameGrid.addWeapons(listWeapons);
+    
+    for (Weapon weapon: listWeapons) {
+    	System.out.println("\nEu ocupo estas celulas\n");
+    	weapon.listPosition();
+    }
+    
+    Player currentPlayer = new Player("George");
+    
+    while(currentPlayer.getRemaingShots() > 0) {
+    	int[] position = new int[2];
+    	position[0] = Integer.parseInt(JOptionPane.showInputDialog(null, "Posição x:"));
+    	position[1] = Integer.parseInt(JOptionPane.showInputDialog(null, "Posição y:"));
+    	gameGrid.receiveShot(new Shot(position, currentPlayer));
+    	JOptionPane.showMessageDialog(null, "Jogador: " + currentPlayer.getName() + "\n Pontos: " + currentPlayer.getPoints() 
+    			+ "\n Tiros Restantes: " + currentPlayer.getRemaingShots() 
+    			+ "\n Pontuação do Elemento: " + gameGrid.get(position[0], position[1]).getContent().getPoints());
+    }
   }
 
   public static Properties getProp() throws IOException {
@@ -32,24 +63,6 @@ public class Principal {
     return prop;
   }
 
-  public static void addWeaponToGrid(Weapon[][] grid,
-      ArrayList<Weapon> listWeapon) {
-    Random r = new Random();
-    int[] position = new int[2];
-    int gridSize = Integer.parseInt(prop.getProperty("grid_size"));
-    int cells;
-    Orientation orientation;
-
-    for (Weapon weapon : listWeapon) {
-      cells = weapon.getCellsOccupation();
-      do {
-        position[0] = r.nextInt(gridSize);
-        position[1] = r.nextInt(gridSize);
-        orientation = listOrientations.get(r.nextInt(4));
-      } while(!orientation.checkEmptyCells(grid, cells, position));
-      orientation.fillCells(grid, weapon, position);
-    }
-  }
   
   public static void populateWeapons(ArrayList<Weapon> listWeapons, Class c,
       int quantity) throws InstantiationException, IllegalAccessException {
