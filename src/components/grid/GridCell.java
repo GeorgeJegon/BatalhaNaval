@@ -6,8 +6,7 @@ public class GridCell {
   private int status;
   private Weapon content;
   
-  
-  public GridCell () {
+   public GridCell () {
     this.status = 0;
   }
   
@@ -19,6 +18,14 @@ public class GridCell {
     return this.status;
   }
   
+  public Weapon getContent() {
+	return content;
+  }
+
+  public void setContent(Weapon content) {
+	this.content = content;
+  }
+
   public void setStatus(int status) {
     this.status = status;
   }
