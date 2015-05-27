@@ -35,7 +35,7 @@ public abstract class Orientation {
 
   public void fillCells(Grid grid, Weapon weapon, int[] initialPosition) {
     int iterations = weapon.getCellsOccupation();
- 
+
     for (int i = 0; i < iterations; i++) {
       int[] position = new int[2];
       position[0] = initialPosition[0] + (this.dx * i);

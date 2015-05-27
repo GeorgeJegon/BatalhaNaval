@@ -13,38 +13,38 @@ import components.shot.Shot;
 import components.weapons.Weapon;
 
 public abstract class Grid {
-  private GridCell[][] board;
-  private int          gridSize = 100;
+  private GridCell[][]           board;
+  private int                    gridSize         = 100;
   private ArrayList<Orientation> listOrientations = new ArrayList<Orientation>();
-  
+
   public Grid() {
     this.initBoard();
-    this.listOrientations.addAll(Arrays.asList(new Right(), new Up(), new Left(),
-            new Bottom()));
+    this.listOrientations.addAll(Arrays.asList(new Right(), new Up(),
+        new Left(), new Bottom()));
   }
 
-  public GridCell get(int index){
-    int i = (index/this.gridSize) , j =  (index % this.gridSize);
+  public GridCell get(int index) {
+    int i = (index / this.gridSize), j = (index % this.gridSize);
     return this.get(i, j);
   }
-  
-  public GridCell get(int i, int j){
+
+  public GridCell get(int i, int j) {
     if (this.validPosition(i, j)) {
-     return this.board[i][j];
+      return this.board[i][j];
     }
     return null;
   }
-  
+
   public int getGridSize() {
-	return gridSize;
+    return gridSize;
   }
 
   public void setGridSize(int gridSize) {
-	this.gridSize = gridSize;
+    this.gridSize = gridSize;
   }
-  
+
   public void addWeapons(ArrayList<Weapon> listWeapons) {
-	Random r = new Random();
+    Random r = new Random();
     int[] position = new int[2];
     int gridSize = 100;
     int cells;
@@ -56,7 +56,7 @@ public abstract class Grid {
         position[0] = r.nextInt(gridSize);
         position[1] = r.nextInt(gridSize);
         orientation = listOrientations.get(r.nextInt(4));
-      } while(!orientation.checkEmptyCells(this, cells, position));
+      } while (!orientation.checkEmptyCells(this, cells, position));
       orientation.fillCells(this, weapon, position);
     }
   }
@@ -72,7 +72,7 @@ public abstract class Grid {
   private boolean validPositionCol(int j) {
     return (j >= 0 && j < this.gridSize);
   }
- 
+
   private void initBoard() {
     this.board = new GridCell[this.gridSize][this.gridSize];
     for (int i = 0; i < this.gridSize; i++) {

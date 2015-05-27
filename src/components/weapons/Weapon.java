@@ -11,17 +11,17 @@ public abstract class Weapon {
     this.points = points;
     this.cellsOccupation = cellsOccupation;
   }
-  
-  public void addPosition(int[] position){
+
+  public void addPosition(int[] position) {
     this.attachedPosition.add(position);
   }
-  
-  public void listPosition(){
-    for(int[] position: this.attachedPosition){
+
+  public void listPosition() {
+    for (int[] position : this.attachedPosition) {
       System.out.println("(" + position[0] + ", " + position[1] + ")");
     }
   }
-  
+
   // Getters and Setters
   public int getPoints() {
     return this.points;
@@ -38,7 +38,7 @@ public abstract class Weapon {
   public void setCellsOccupation(int cellsOccupation) {
     this.cellsOccupation = cellsOccupation;
   }
-  
+
   public ArrayList<int[]> getAttachedPosition() {
     return this.attachedPosition;
   }

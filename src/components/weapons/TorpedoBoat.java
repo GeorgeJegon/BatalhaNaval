@@ -1,7 +1,7 @@
 package components.weapons;
 
 public class TorpedoBoat extends Weapon {
-  public TorpedoBoat(){
+  public TorpedoBoat() {
     super(15, 2);
   }
 }
