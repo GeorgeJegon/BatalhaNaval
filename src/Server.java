@@ -5,8 +5,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import components.grid.GridCell;
 import components.grid.GridServer;
 import components.player.Player;
+import components.shot.Shot;
 import components.weapons.Aerocarrier;
 import components.weapons.BattleShip;
 import components.weapons.Submarine;
@@ -28,7 +30,9 @@ public class Server {
   private void run() throws InstantiationException, IllegalAccessException,
       ClassNotFoundException, IOException {
     this.initGrid();
+    this.showWeaponPositions();
     this.initComunication();
+    
   }
 
   private void initGrid() throws InstantiationException, IllegalAccessException {
@@ -49,20 +53,62 @@ public class Server {
 
     server = new ServerSocket(3322);
     System.out.println("Servidor iniciado na porta 3322");
-  
+
     client = server.accept();
-    System.out.println("Cliente conectado do IP"
+    System.out.println("Cliente conectado, do IP "
         + client.getInetAddress().getHostAddress());
 
     output = new ObjectOutputStream(client.getOutputStream());
     input = new ObjectInputStream(client.getInputStream());
 
     while ((shotMessage = (ShotMessage) input.readObject()) != null) {
-      System.out.println(shotMessage.getName());
+      Shot shot = shotMessage.getShot();
+
+      this.gameGrid.receiveShot(shot);
+
+      Player player = shot.getPlayer();
+      int[] position = shot.getPosition();
+      GridCell cell = this.gameGrid.get(position[0], position[1]);
+      Weapon weapon;
+
+      if (!cell.isEmpty()) {
+        weapon = cell.getContent();
+        System.out.println("O player " + player.getName() + " conseguiu "
+            + weapon.getPoints() + " pontos! Nova pontuação dele é "
+            + player.getPoints() + " pontos");
+      }
     }
 
     output.close();
     client.close();
     server.close();
+  }
+
+  private void test() {
+    Player player = new Player("George");
+    Weapon weapon;
+    int[] position;
+    Shot shot;
+
+    for (int i = 0; i < 2; i++) {
+      weapon = this.listWeapons.get(i);
+      position = weapon.getAttachedPosition().get(0);
+      shot = new Shot(position, player);
+      this.gameGrid.receiveShot(shot);
+
+      System.out.println("O player " + player.getName() + " conseguiu "
+          + weapon.getPoints() + " pontos! Nova pontuação dele é "
+          + player.getPoints() + " pontos");
+    }
+
+  }
+
+  private void showWeaponPositions() {
+    for (Weapon weapon : this.listWeapons) {
+      System.out.println("\nEu me encontro nessas posições aqui:");
+      for (int[] position : weapon.getAttachedPosition()) {
+        System.out.println("(" + position[0] + "," + position[0] + ")");
+      }
+    }
   }
 }
