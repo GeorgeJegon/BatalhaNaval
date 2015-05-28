@@ -1,8 +1,11 @@
 package components.shot;
 
+import java.io.Serializable;
+
 import components.player.Player;
 
-public class Shot {
+public class Shot implements Serializable {
+  private static final long serialVersionUID = -3793135616015321624L;
   private int[]  position = new int[2];
   private Player player;
 

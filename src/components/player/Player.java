@@ -1,6 +1,9 @@
 package components.player;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
+  private static final long serialVersionUID = -4275866453135476393L;
   private int    remaingShots;
   private int    points;
   private String name = new String();
