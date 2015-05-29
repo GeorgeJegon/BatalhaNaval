@@ -1,5 +1,8 @@
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 
 import components.client.Client;
 import components.graphic.ClientConnectWindow;
@@ -16,11 +19,26 @@ public class ClientGraph extends Client {
     this.initComponents();
   }
 
+  public void disableGridCell(int[] position) {
+    JOptionPane.showMessageDialog(null, "Meu nome é george");
+    super.disableGridCell(position);
+    int gridSize = this.getGameGrid().getGridSize();
+    int index = (position[0] * gridSize) + (position[1] % gridSize);
+    this.gameWindow.getListButtons().get(index).setEnabled(false);
+  }
+//
+//  public void disableGridCells(ArrayList<int[]> listPositions) {
+//    for (int[] position : listPositions) {
+//      this.disableGridCell(position);
+//    }
+//  }
+
   private void initComponents() {
     // this.initConnectWindow();
     this.initGameWindow();
   }
 
+  @SuppressWarnings("unused")
   private void initConnectWindow() {
     this.connectWindow = new ClientConnectWindow(this);
     this.connectWindow.setSize(239, 222);

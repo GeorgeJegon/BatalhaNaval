@@ -33,33 +33,42 @@ public class ClientHandler implements Runnable {
     String message;
     try {
       while ((message = this.reader.readLine()) != null) {
+        ArrayList<String> response = new ArrayList<String>();
         String[] data = message.split(":");
         String actionType = data[0];
+
         if (actionType.equals("connect")) {
+
           this.player = new Player(data[1]);
           this.server.listPlayers.add(player);
+
         } else if (actionType.equals("disconnect")) {
 
         } else if (actionType.equals("shot")) {
+
           int[] position = new int[2];
           position[0] = Integer.parseInt(data[1]);
           position[1] = Integer.parseInt(data[2]);
-          System.out.println(this.player.getName());
           Shot shot = new Shot(position, this.player);
           this.server.gameGrid.receiveShot(shot);
-          System.out.println(this.player.getName());
-          System.out.println(shot.success());
+          response.add("disableGridCells");
 
           if (shot.success()) {
+
             GridCell cell = this.server.gameGrid.get(position);
             Weapon weapon = cell.getContent();
             ArrayList<int[]> listPositions = weapon.getAttachedPosition();
-            System.out.println(listPositions.toString());
+
+            for (int[] weaponPosition : listPositions) {
+              response.add(weaponPosition[0] + ":" + weaponPosition[1]);
+            }
+
             this.server.publish("shotSuccess:" + this.player.getPoints() + ":"
                 + this.player.getRemaingShots(), clientWriter);
-            this.server.broadcast("disableGridCells:");
+            this.server.broadcast(String.join(":", response));
           } else {
-            this.server.broadcast("disableGridCells");
+            response.add(position[0] + ":" + position[1]);
+            this.server.broadcast(String.join(":", response));
           }
         }
         System.out.println(message);

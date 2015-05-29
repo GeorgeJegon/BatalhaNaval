@@ -46,6 +46,16 @@ public abstract class Grid {
   public void setGridSize(int gridSize) {
     this.gridSize = gridSize;
   }
+  
+  public void disableCell(int[] position){
+    this.get(position).setStatus(1);
+  }
+  
+  public void disableCells(ArrayList<int[]> listPositions){
+    for(int[] position: listPositions){
+      this.disableCell(position);
+    }
+  }
 
   public void addWeapons(ArrayList<Weapon> listWeapons) {
     Random r = new Random();
@@ -61,7 +71,6 @@ public abstract class Grid {
         position[1] = r.nextInt(gridSize);
         orientation = listOrientations.get(r.nextInt(4));
       } while (!orientation.checkEmptyCells(this, cells, position));
-      System.out.println(orientation);
       orientation.fillCells(this, weapon, position);
     }
   }

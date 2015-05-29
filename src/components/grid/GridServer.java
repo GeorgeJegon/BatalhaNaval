@@ -13,9 +13,7 @@ public class GridServer extends Grid {
     GridCell currentCell = this.get(position[0], position[1]);
     Weapon currentWeapon;
     ArrayList<int[]> weaponPositions;
-    
-    System.out.println(currentCell.getStatus());
-
+   
     if (currentCell.getStatus() == 0) {
       currentCell.setStatus(1);
       if (!currentCell.isEmpty()) {

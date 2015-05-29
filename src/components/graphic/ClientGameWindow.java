@@ -25,6 +25,10 @@ public class ClientGameWindow extends JFrame {
     this.addButtons();
   }
 
+  public ArrayList<JButton> getListButtons() {
+    return this.listButtons;
+  }
+
   private void initComponents() {
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     int width = breakGrid;
@@ -59,8 +63,9 @@ public class ClientGameWindow extends JFrame {
       currentButton = new JButton();
       currentButton.setActionCommand("GridCell");
       currentButton.setName(new Integer(x).toString());
-      currentButton.setToolTipText("(" + i + "," + j  + ")");
+      currentButton.setToolTipText("(" + i + "," + j + ")");
       currentButton.setPreferredSize(dimension);
+      currentButton.setOpaque(true);
 
       currentButton.addActionListener(this.buttonHandler());
 
@@ -78,7 +83,7 @@ public class ClientGameWindow extends JFrame {
         if (action.equals("GridCell")) {
           int x = Integer.parseInt(gridButton.getName());
           int i = (x / 100), j = (x % 100);
-          client.doShot(i, j);
+          client.getGameGrid().receiveShot(i, j, client);
         }
       }
     };

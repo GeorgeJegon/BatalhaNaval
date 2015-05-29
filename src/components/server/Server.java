@@ -48,19 +48,17 @@ public class Server {
       Utils.populateWeapons(this.listWeapons, BattleShip.class, 3);
       this.gameGrid.addWeapons(this.listWeapons);
     } catch (InstantiationException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     } catch (IllegalAccessException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
-  
+
   private void showWeaponPositions() {
     for (Weapon weapon : this.listWeapons) {
       System.out.println("\nEu me encontro nessas posições aqui:");
       for (int[] position : weapon.getAttachedPosition()) {
-        System.out.println("(" + position[0] + "," + position[0] + ")");
+        System.out.println("(" + position[0] + "," + position[1] + ")");
       }
     }
   }
