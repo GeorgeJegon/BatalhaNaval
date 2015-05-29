@@ -23,10 +23,6 @@ public class Server {
   public ArrayList<Player>       listPlayers;
   public GridServer              gameGrid;
 
-  public static void main(String[] args) {
-    new Server();
-  }
-
   public Server() {
     this.listClientsOutputStream = new ArrayList<PrintWriter>();
     this.listWeapons = new ArrayList<Weapon>();

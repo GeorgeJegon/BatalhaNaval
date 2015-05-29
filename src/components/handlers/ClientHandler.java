@@ -37,12 +37,18 @@ public class ClientHandler implements Runnable {
         String[] data = message.split(":");
         String actionType = data[0];
 
+        System.out.println(message);
+
         if (actionType.equals("connect")) {
 
           this.player = new Player(data[1]);
           this.server.listPlayers.add(player);
 
         } else if (actionType.equals("disconnect")) {
+          this.reader.close();
+          this.clientWriter.close();
+          this.clientSocket.close();
+          this.server.publish("disconnectedSuccess", clientWriter);
 
         } else if (actionType.equals("shot")) {
 
@@ -67,11 +73,13 @@ public class ClientHandler implements Runnable {
                 + this.player.getRemaingShots(), clientWriter);
             this.server.broadcast(String.join(":", response));
           } else {
+            this.server.publish("shotFail:" + this.player.getPoints() + ":"
+                + this.player.getRemaingShots(), clientWriter);
+            
             response.add(position[0] + ":" + position[1]);
             this.server.broadcast(String.join(":", response));
           }
         }
-        System.out.println(message);
       }
     } catch (IOException e) {
       e.printStackTrace();

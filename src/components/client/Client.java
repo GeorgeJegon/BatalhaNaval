@@ -16,10 +16,11 @@ public class Client {
   private PrintWriter    writer;
   private String         host;
   private int            port;
-  private boolean        connected = false;
+  private boolean        connected    = false;
   private String         name;
   private int            points;
   private GridClient     gameGrid;
+  private int            remaingShots = 20;
 
   public Client() {
     this.gameGrid = new GridClient();
@@ -30,7 +31,7 @@ public class Client {
     this.port = port;
     this.gameGrid = new GridClient();
   }
-  
+
   public GridClient getGameGrid() {
     return this.gameGrid;
   }
@@ -51,15 +52,23 @@ public class Client {
     this.port = port;
   }
 
+  public int getRemaingShots() {
+    return this.remaingShots;
+  }
+
+  public void setRemaingShots(int remaingShots) {
+    this.remaingShots = remaingShots;
+  }
+
   public boolean isConnect() {
     return this.connected;
   }
-  
-  public void disableGridCell(int[] position){
+
+  public void disableGridCell(int[] position) {
     this.gameGrid.disableCell(position);
   }
-  
-  public void disableGridCells(ArrayList<int[]> listPositions){
+
+  public void disableGridCells(ArrayList<int[]> listPositions) {
     this.gameGrid.disableCells(listPositions);
   }
 
@@ -76,6 +85,15 @@ public class Client {
 
       this.send("connect:" + this.name);
 
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void disconnect() {
+    try {
+      this.send("disconnect:" + this.name);
+      this.clientSock.close();
     } catch (IOException e) {
       e.printStackTrace();
     }
