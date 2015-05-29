@@ -6,8 +6,9 @@ import components.player.Player;
 
 public class Shot implements Serializable {
   private static final long serialVersionUID = -3793135616015321624L;
-  private int[]  position = new int[2];
-  private Player player;
+  private int[]             position         = new int[2];
+  private Player            player;
+  private int               status;
 
   public Shot(int i, int j, Player player) {
     this.position[0] = i;
@@ -20,8 +21,12 @@ public class Shot implements Serializable {
     this.player = player;
   }
 
-  public void execute() {
-
+  public boolean success() {
+    return this.status == 1;
+  }
+  
+  public void setStatus (int status) {
+    this.status = status;
   }
 
   public int[] getPosition() {

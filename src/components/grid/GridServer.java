@@ -13,6 +13,8 @@ public class GridServer extends Grid {
     GridCell currentCell = this.get(position[0], position[1]);
     Weapon currentWeapon;
     ArrayList<int[]> weaponPositions;
+    
+    System.out.println(currentCell.getStatus());
 
     if (currentCell.getStatus() == 0) {
       currentCell.setStatus(1);
@@ -22,6 +24,7 @@ public class GridServer extends Grid {
         for (int[] _position : weaponPositions) {
           this.get(_position[0], _position[1]).setStatus(1);
         }
+        shot.setStatus(1);
         currentPlayer.addPoints(currentWeapon.getPoints());
       }
       currentPlayer.setRemaingShots(currentPlayer.getRemaingShots() - 1);

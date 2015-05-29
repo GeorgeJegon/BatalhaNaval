@@ -1,0 +1,39 @@
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
+import components.client.Client;
+import components.graphic.ClientConnectWindow;
+import components.graphic.ClientGameWindow;
+
+public class ClientGraph extends Client {
+  private ClientConnectWindow connectWindow;
+  private ClientGameWindow    gameWindow;
+
+  public ClientGraph() {
+    super("127.0.0.1", 3322);
+    this.setName("George");
+    this.connect();
+    this.initComponents();
+  }
+
+  private void initComponents() {
+    // this.initConnectWindow();
+    this.initGameWindow();
+  }
+
+  private void initConnectWindow() {
+    this.connectWindow = new ClientConnectWindow(this);
+    this.connectWindow.setSize(239, 222);
+    this.connectWindow.setVisible(true);
+    this.connectWindow.setLocationRelativeTo(null);
+  }
+
+  private void initGameWindow() {
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    this.gameWindow = new ClientGameWindow(this);
+    this.gameWindow.setSize(screenSize);
+    this.gameWindow.setResizable(true);
+    this.gameWindow.setLocationRelativeTo(null);
+    this.gameWindow.setVisible(true);
+  }
+}

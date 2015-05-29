@@ -27,6 +27,10 @@ public abstract class Grid {
     int i = (index / this.gridSize), j = (index % this.gridSize);
     return this.get(i, j);
   }
+  
+  public GridCell get(int[] position) {
+    return this.get(position[0], position[1]);
+  }
 
   public GridCell get(int i, int j) {
     if (this.validPosition(i, j)) {
@@ -57,6 +61,7 @@ public abstract class Grid {
         position[1] = r.nextInt(gridSize);
         orientation = listOrientations.get(r.nextInt(4));
       } while (!orientation.checkEmptyCells(this, cells, position));
+      System.out.println(orientation);
       orientation.fillCells(this, weapon, position);
     }
   }
