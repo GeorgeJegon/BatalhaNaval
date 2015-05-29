@@ -1,7 +1,9 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import components.client.Client;
@@ -20,18 +22,19 @@ public class ClientGraph extends Client {
   }
 
   public void disableGridCell(int[] position) {
-    JOptionPane.showMessageDialog(null, "Meu nome é george");
     super.disableGridCell(position);
     int gridSize = this.getGameGrid().getGridSize();
     int index = (position[0] * gridSize) + (position[1] % gridSize);
-    this.gameWindow.getListButtons().get(index).setEnabled(false);
+    JButton button = this.gameWindow.getListButtons().get(index);
+    button.setEnabled(false);
+    button.setBackground(Color.RED);
   }
-//
-//  public void disableGridCells(ArrayList<int[]> listPositions) {
-//    for (int[] position : listPositions) {
-//      this.disableGridCell(position);
-//    }
-//  }
+
+  public void disableGridCells(ArrayList<int[]> listPositions) {
+    for (int[] position : listPositions) {
+      this.disableGridCell(position);
+    }
+  }
 
   private void initComponents() {
     // this.initConnectWindow();

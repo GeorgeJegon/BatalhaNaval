@@ -29,7 +29,7 @@ public class ServerHandler implements Runnable {
               "Você acertou um tiro!\nSua nova pontuação é de: " + data[1]
                   + " pontos, e restam " + data[2] + " tiros!");
         } else if (actionType.equals("disableGridCells")) {
-          int totalData = (data.length - 1) / 2;
+          int totalData = (data.length - 1);
           for (int i = 1; i < totalData; i += 2) {
             int[] position = { Integer.parseInt(data[i]) , Integer.parseInt(data[i+1])};
             this.client.disableGridCell(position);
