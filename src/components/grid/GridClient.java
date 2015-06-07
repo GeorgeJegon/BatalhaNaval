@@ -8,7 +8,6 @@ import components.shot.Shot;
 public class GridClient extends Grid {
   public void receiveShot(int i, int j, Client client) {
     GridCell currentCell = this.get(i, j);
-    int[] position = { i, j };
     if (client.getRemaingShots() > 0) {
       if (currentCell.getStatus() == 0) {
         client.doShot(i, j);

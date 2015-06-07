@@ -42,9 +42,15 @@ public class ClientHandler implements Runnable {
         if (actionType.equals("connect")) {
 
           this.player = new Player(data[1]);
+          this.player.setClientID(this.server.listPlayers.size());
           this.server.listPlayers.add(player);
+          this.server.publish(
+              "connected:" + this.player.getPoints() + ":"
+                  + this.player.getRemaingShots() + ":"
+                  + this.player.getClientID(), clientWriter);
 
         } else if (actionType.equals("disconnect")) {
+
           this.reader.close();
           this.clientWriter.close();
           this.clientSocket.close();
@@ -57,7 +63,6 @@ public class ClientHandler implements Runnable {
           position[1] = Integer.parseInt(data[2]);
           Shot shot = new Shot(position, this.player);
           this.server.gameGrid.receiveShot(shot);
-          response.add("disableGridCells");
 
           if (shot.success()) {
 
@@ -65,20 +70,27 @@ public class ClientHandler implements Runnable {
             Weapon weapon = cell.getContent();
             ArrayList<int[]> listPositions = weapon.getAttachedPosition();
 
+            response.add("disableGridCells");
+
             for (int[] weaponPosition : listPositions) {
               response.add(weaponPosition[0] + ":" + weaponPosition[1]);
             }
 
             this.server.publish("shotSuccess:" + this.player.getPoints() + ":"
                 + this.player.getRemaingShots(), clientWriter);
-            this.server.broadcast(String.join(":", response));
+            this.server.broadcast(String.join(":", response), clientWriter);
+            response.remove(0);
+            this.server.publish("disableGridCellSuccess:" + String.join(":", response), clientWriter);
           } else {
+
             this.server.publish("shotFail:" + this.player.getPoints() + ":"
                 + this.player.getRemaingShots(), clientWriter);
-            
+
+            response.add("disableGridCells");
             response.add(position[0] + ":" + position[1]);
             this.server.broadcast(String.join(":", response));
           }
+          this.server.checkGameOver();
         }
       }
     } catch (IOException e) {

@@ -23,6 +23,7 @@ public class GridServer extends Grid {
           this.get(_position[0], _position[1]).setStatus(1);
         }
         shot.setStatus(1);
+        currentWeapon.setDestroyed(1);
         currentPlayer.addPoints(currentWeapon.getPoints());
       }
       currentPlayer.setRemaingShots(currentPlayer.getRemaingShots() - 1);
