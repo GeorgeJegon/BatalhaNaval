@@ -21,6 +21,9 @@ public class ClientConnectWindow extends JFrame {
 
   public ClientConnectWindow(final Client client,
       final ClientGameWindow clientGameWindow) {
+    
+    setTitle("Conectar ao Servidor do Jogo");
+    
     JLabel addressLabel = new JLabel("Address");
 
     addressField = new JTextField();
@@ -40,11 +43,13 @@ public class ClientConnectWindow extends JFrame {
       public void actionPerformed(ActionEvent arg0) {
         if (!client.isConnect()) {
           if (addressField.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Preencha o campo de Endereço do Servidor!");
+            JOptionPane.showMessageDialog(null,
+                "Preencha o campo de Endereço do Servidor!");
             return;
           }
           if (portField.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Preencha o campo de Porta do Servidor!");
+            JOptionPane.showMessageDialog(null,
+                "Preencha o campo de Porta do Servidor!");
             return;
           }
           if (nameField.getText().equals("")) {
@@ -57,59 +62,78 @@ public class ClientConnectWindow extends JFrame {
           client.connect();
           if (client.isConnect()) {
             setVisible(false);
+            clientGameWindow.setTitle("Client - " + client.getName());
             clientGameWindow.setVisible(true);
           } else {
-            JOptionPane.showMessageDialog(null, "Erro ao conectar ao Servidor!");
+            JOptionPane
+                .showMessageDialog(null, "Erro ao conectar ao Servidor!");
           }
-          
+
         }
       }
     });
-    
+
     JLabel nameLabel = new JLabel("Name:");
-    
+
     nameField = new JTextField();
     nameField.setColumns(10);
 
     GroupLayout groupLayout = new GroupLayout(getContentPane());
-    groupLayout.setHorizontalGroup(
-      groupLayout.createParallelGroup(Alignment.TRAILING)
-        .addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-          .addGap(73)
-          .addComponent(btnNewButton)
-          .addContainerGap(77, Short.MAX_VALUE))
-        .addGroup(groupLayout.createSequentialGroup()
-          .addContainerGap(45, Short.MAX_VALUE)
-          .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-            .addComponent(nameLabel)
-            .addComponent(portLabel)
-            .addComponent(addressLabel))
-          .addPreferredGap(ComponentPlacement.UNRELATED)
-          .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-            .addComponent(addressField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addComponent(portField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-          .addGap(43))
-    );
-    groupLayout.setVerticalGroup(
-      groupLayout.createParallelGroup(Alignment.LEADING)
-        .addGroup(groupLayout.createSequentialGroup()
-          .addGap(41)
-          .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-            .addComponent(addressLabel)
-            .addComponent(addressField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-          .addPreferredGap(ComponentPlacement.UNRELATED)
-          .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-            .addComponent(portLabel)
-            .addComponent(portField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-          .addPreferredGap(ComponentPlacement.UNRELATED)
-          .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-            .addComponent(nameLabel)
-            .addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-          .addPreferredGap(ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-          .addComponent(btnNewButton)
-          .addGap(22))
-    );
+    groupLayout.setHorizontalGroup(groupLayout
+        .createParallelGroup(Alignment.TRAILING)
+        .addGroup(
+            Alignment.LEADING,
+            groupLayout.createSequentialGroup().addGap(73)
+                .addComponent(btnNewButton)
+                .addContainerGap(77, Short.MAX_VALUE))
+        .addGroup(
+            groupLayout
+                .createSequentialGroup()
+                .addContainerGap(45, Short.MAX_VALUE)
+                .addGroup(
+                    groupLayout.createParallelGroup(Alignment.TRAILING)
+                        .addComponent(nameLabel).addComponent(portLabel)
+                        .addComponent(addressLabel))
+                .addPreferredGap(ComponentPlacement.UNRELATED)
+                .addGroup(
+                    groupLayout
+                        .createParallelGroup(Alignment.LEADING)
+                        .addComponent(addressField, GroupLayout.PREFERRED_SIZE,
+                            GroupLayout.DEFAULT_SIZE,
+                            GroupLayout.PREFERRED_SIZE)
+                        .addComponent(portField, GroupLayout.PREFERRED_SIZE,
+                            GroupLayout.DEFAULT_SIZE,
+                            GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nameField, GroupLayout.PREFERRED_SIZE,
+                            GroupLayout.DEFAULT_SIZE,
+                            GroupLayout.PREFERRED_SIZE)).addGap(43)));
+    groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
+        Alignment.LEADING).addGroup(
+        groupLayout
+            .createSequentialGroup()
+            .addGap(41)
+            .addGroup(
+                groupLayout
+                    .createParallelGroup(Alignment.BASELINE)
+                    .addComponent(addressLabel)
+                    .addComponent(addressField, GroupLayout.PREFERRED_SIZE,
+                        GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(ComponentPlacement.UNRELATED)
+            .addGroup(
+                groupLayout
+                    .createParallelGroup(Alignment.BASELINE)
+                    .addComponent(portLabel)
+                    .addComponent(portField, GroupLayout.PREFERRED_SIZE,
+                        GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(ComponentPlacement.UNRELATED)
+            .addGroup(
+                groupLayout
+                    .createParallelGroup(Alignment.BASELINE)
+                    .addComponent(nameLabel)
+                    .addComponent(nameField, GroupLayout.PREFERRED_SIZE,
+                        GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+            .addComponent(btnNewButton).addGap(22)));
     getContentPane().setLayout(groupLayout);
   }
 }
