@@ -1,8 +1,6 @@
 package components.graphic;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -16,10 +14,6 @@ public class ClientGraph extends Client {
     super("127.0.0.1", 3322);
     this.initComponents();
   }
-  
-  public void test(){
-    
-  }
 
   public ClientConnectWindow getConnectWindow() {
     return this.connectWindow;
@@ -29,18 +23,30 @@ public class ClientGraph extends Client {
     return this.gameWindow;
   }
 
-  public void disableGridCell(int[] position) {
-    super.disableGridCell(position);
+  public void disableGridCell(int[] position, int currentPlayer) {
+    super.disableGridCell(position, currentPlayer);
     int gridSize = this.getGameGrid().getGridSize();
     int index = (position[0] * gridSize) + (position[1] % gridSize);
     JButton button = this.gameWindow.getListButtons().get(index);
-    button.setBackground(Color.RED);
+    if (currentPlayer == 1) {
+      button.setBackground(Color.RED);
+    } else {
+      button.setBackground(Color.YELLOW);
+    }
   }
 
-  public void disableGridCells(ArrayList<int[]> listPositions) {
+  public void disableGridCells(ArrayList<int[]> listPositions, int currentPlayer) {
     for (int[] position : listPositions) {
-      this.disableGridCell(position);
+      this.disableGridCell(position, currentPlayer);
     }
+  }
+
+  public void updateScore(String score) {
+    this.gameWindow.updateScorePoints(score);
+  }
+
+  public void updateRemaingShots(String remaingShots) {
+    this.gameWindow.updateRemaingShotsNumber(remaingShots);
   }
 
   private void initComponents() {
@@ -56,9 +62,8 @@ public class ClientGraph extends Client {
   }
 
   private void initGameWindow() {
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     this.gameWindow = new ClientGameWindow(this);
-    this.gameWindow.setSize(screenSize);
+    this.gameWindow.setSize(1000, 639);
     this.gameWindow.setResizable(true);
     this.gameWindow.setLocationRelativeTo(null);
   }

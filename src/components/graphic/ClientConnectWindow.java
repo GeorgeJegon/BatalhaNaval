@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class ClientConnectWindow extends JFrame {
+  private static final long serialVersionUID = -60186264820779422L;
   private JTextField addressField;
   private JTextField portField;
   private JTextField nameField;

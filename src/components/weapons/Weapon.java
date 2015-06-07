@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public abstract class Weapon {
   protected int              points           = 0;
   protected int              cellsOccupation  = 0;
+  protected int              destroyed        = 0;
   protected ArrayList<int[]> attachedPosition = new ArrayList<int[]>();
 
   public Weapon(int points, int cellsOccupation) {
@@ -25,6 +26,14 @@ public abstract class Weapon {
   // Getters and Setters
   public int getPoints() {
     return this.points;
+  }
+
+  public int getDestroyed() {
+    return this.destroyed;
+  }
+
+  public void setDestroyed(int destroyed) {
+    this.destroyed = destroyed;
   }
 
   public void setPoints(int points) {

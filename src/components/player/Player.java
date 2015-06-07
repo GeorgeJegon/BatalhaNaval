@@ -4,9 +4,10 @@ import java.io.Serializable;
 
 public class Player implements Serializable {
   private static final long serialVersionUID = -4275866453135476393L;
-  private int    remaingShots;
-  private int    points;
-  private String name = new String();
+  private int               remaingShots;
+  private int               points;
+  private int               clientID;
+  private String            name             = new String();
 
   public Player(String name) {
     this.remaingShots = 20;
@@ -16,6 +17,14 @@ public class Player implements Serializable {
 
   public void addPoints(int points) {
     this.points += points;
+  }
+
+  public int getClientID() {
+    return this.clientID;
+  }
+
+  public void setClientID(int clientID) {
+    this.clientID = clientID;
   }
 
   public int getRemaingShots() {

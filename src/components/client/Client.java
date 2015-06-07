@@ -18,8 +18,8 @@ public class Client {
   private int            port;
   private boolean        connected    = false;
   private String         name;
-  private int            points;
   private GridClient     gameGrid;
+  private int            clientID;
   private int            remaingShots = 20;
 
   public Client() {
@@ -30,6 +30,14 @@ public class Client {
     this.host = host;
     this.port = port;
     this.gameGrid = new GridClient();
+  }
+
+  public int getClientID() {
+    return this.clientID;
+  }
+
+  public void setClientID(int clientID) {
+    this.clientID = clientID;
   }
 
   public GridClient getGameGrid() {
@@ -64,12 +72,20 @@ public class Client {
     return this.connected;
   }
 
-  public void disableGridCell(int[] position) {
+  public void disableGridCell(int[] position, int currentPlayer) {
     this.gameGrid.disableCell(position);
   }
 
-  public void disableGridCells(ArrayList<int[]> listPositions) {
+  public void disableGridCells(ArrayList<int[]> listPositions, int currentPlayer) {
     this.gameGrid.disableCells(listPositions);
+  }
+
+  public void updateScore(String score) {
+    System.out.println("Pontuação: " + score);
+  }
+
+  public void updateRemaingShots(String remaingShots) {
+    System.out.println("Tiros restantes: " + remaingShots);
   }
 
   public void connect() {
